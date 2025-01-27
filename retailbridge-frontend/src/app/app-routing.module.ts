@@ -5,13 +5,18 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   { path: '', component: ProductListComponent },
   { path: 'product/:id', component: ProductDetailComponent },
 ];
 
+
 bootstrapApplication(AppComponent, {
   providers: [provideRouter(routes, withComponentInputBinding())],
 });
+@NgModule({
+  imports: [HttpClientModule],
+})
 export class AppRoutingModule {}

@@ -19,32 +19,7 @@ export class ProductDetailComponent implements OnInit {
     { user: 'Alice', comment: 'Great quality!' },
     { user: 'Bob', comment: 'Worth the price!' },
   ];
-  products = [
-  {
-    id: 1,
-    name: 'Air Max',
-    brand: 'Nike',
-    price: 120,
-    image: ' images/airmax.jpg',
-    description: 'High-performance sneakers with great comfort.',
-  },
-  {
-    id: 2,
-    name: 'Ultraboost',
-    brand: 'Adidas',
-    price: 150,
-    image: 'images/ultraboost.webp',
-    description: 'Stylish sneakers with exceptional cushioning.',
-  },
-  {
-    id: 3,
-    name: 'Classic',
-    brand: 'Reebok',
-    price: 100,
-    image: 'images/classic.jpg',
-    description: 'Timeless design with unmatched durability.',
-  },
-];
+  
 
   constructor(
     private route: ActivatedRoute,
@@ -53,7 +28,33 @@ export class ProductDetailComponent implements OnInit {
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.product = this.products.find((p) => p.id === +id);
+      const productData = [
+        {
+          id: 1,
+          name: 'Air Max',
+          brand: 'Nike',
+          price: 120,
+          image: ' images/airmax.jpg',
+          description: 'High-performance sneakers with great comfort.',
+        },
+        {
+          id: 2,
+          name: 'Ultraboost',
+          brand: 'Adidas',
+          price: 150,
+          image: 'images/ultraboost.webp',
+          description: 'Stylish sneakers with exceptional cushioning.',
+        },
+        {
+          id: 3,
+          name: 'Classic',
+          brand: 'Reebok',
+          price: 100,
+          image: 'images/classic.jpg',
+          description: 'Timeless design with unmatched durability.',
+        },
+      ];
+      this.product = productData.find(product => product.id === +id);
     }
   }
 }

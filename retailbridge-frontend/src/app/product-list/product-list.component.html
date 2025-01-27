@@ -1,4 +1,6 @@
-
+<div class="search-bar">
+  <input [(ngModel)]="searchQuery" type="text" placeholder="Search for products..." />
+</div>
 <div class="product-list">
   <div *ngFor="let product of products" class="product">
     <img [src]="product.image" alt="{{ product.name }}" />
