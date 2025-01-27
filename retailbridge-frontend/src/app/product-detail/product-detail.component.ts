@@ -9,21 +9,51 @@ import { CommonModule } from '@angular/common';
   selector: 'app-product-detail',
   standalone: true,
   templateUrl: './product-detail.component.html',
-  styleUrls: ['./product-detail.component.scss'],
+  styleUrls: ['./product-detail.component.css'],
   imports: [CommonModule]
 })
 export class ProductDetailComponent implements OnInit {
-  product: Product | null = null;
+  product: any;
+
+  reviews = [
+    { user: 'Alice', comment: 'Great quality!' },
+    { user: 'Bob', comment: 'Worth the price!' },
+  ];
+  products = [
+  {
+    id: 1,
+    name: 'Air Max',
+    brand: 'Nike',
+    price: 120,
+    image: ' images/airmax.jpg',
+    description: 'High-performance sneakers with great comfort.',
+  },
+  {
+    id: 2,
+    name: 'Ultraboost',
+    brand: 'Adidas',
+    price: 150,
+    image: 'images/ultraboost.webp',
+    description: 'Stylish sneakers with exceptional cushioning.',
+  },
+  {
+    id: 3,
+    name: 'Classic',
+    brand: 'Reebok',
+    price: 100,
+    image: 'images/classic.jpg',
+    description: 'Timeless design with unmatched durability.',
+  },
+];
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService
   ) {}
-
-  ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id')!;
-    this.productService.getProductById(id).subscribe(data => {
-      this.product = data;
-    });
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.product = this.products.find((p) => p.id === +id);
+    }
   }
 }
