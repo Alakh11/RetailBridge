@@ -3,7 +3,7 @@ import {DefaultCrudRepository} from '@loopback/repository';
 import {ProductdbDataSource} from '../datasources';
 import {Product, ProductRelations} from '../models';
 
-export class ProductRepositoryRepository extends DefaultCrudRepository<
+export class ProductRepository extends DefaultCrudRepository<
   Product,
   typeof Product.prototype.id,
   ProductRelations

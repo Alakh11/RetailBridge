@@ -7,23 +7,23 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {Product} from '../models';
-import {ProductRepositoryRepository} from '../repositories';
+import {ProductRepository} from '../repositories';
 
-export class ProductControllerController {
+export class ProductController {
   constructor(
-    @repository(ProductRepositoryRepository)
-    public productRepositoryRepository : ProductRepositoryRepository,
+    @repository(ProductRepository)
+    public productRepository : ProductRepository,
   ) {}
 
   @post('/products')
@@ -44,7 +44,7 @@ export class ProductControllerController {
     })
     product: Omit<Product, 'id'>,
   ): Promise<Product> {
-    return this.productRepositoryRepository.create(product);
+    return this.productRepository.create(product);
   }
 
   @get('/products/count')
@@ -55,7 +55,7 @@ export class ProductControllerController {
   async count(
     @param.where(Product) where?: Where<Product>,
   ): Promise<Count> {
-    return this.productRepositoryRepository.count(where);
+    return this.productRepository.count(where);
   }
 
   @get('/products')
@@ -73,7 +73,7 @@ export class ProductControllerController {
   async find(
     @param.filter(Product) filter?: Filter<Product>,
   ): Promise<Product[]> {
-    return this.productRepositoryRepository.find(filter);
+    return this.productRepository.find(filter);
   }
 
   @patch('/products')
@@ -92,7 +92,7 @@ export class ProductControllerController {
     product: Product,
     @param.where(Product) where?: Where<Product>,
   ): Promise<Count> {
-    return this.productRepositoryRepository.updateAll(product, where);
+    return this.productRepository.updateAll(product, where);
   }
 
   @get('/products/{id}')
@@ -108,7 +108,7 @@ export class ProductControllerController {
     @param.path.number('id') id: number,
     @param.filter(Product, {exclude: 'where'}) filter?: FilterExcludingWhere<Product>
   ): Promise<Product> {
-    return this.productRepositoryRepository.findById(id, filter);
+    return this.productRepository.findById(id, filter);
   }
 
   @patch('/products/{id}')
@@ -126,7 +126,7 @@ export class ProductControllerController {
     })
     product: Product,
   ): Promise<void> {
-    await this.productRepositoryRepository.updateById(id, product);
+    await this.productRepository.updateById(id, product);
   }
 
   @put('/products/{id}')
@@ -137,7 +137,7 @@ export class ProductControllerController {
     @param.path.number('id') id: number,
     @requestBody() product: Product,
   ): Promise<void> {
-    await this.productRepositoryRepository.replaceById(id, product);
+    await this.productRepository.replaceById(id, product);
   }
 
   @del('/products/{id}')
@@ -145,6 +145,6 @@ export class ProductControllerController {
     description: 'Product DELETE success',
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {
-    await this.productRepositoryRepository.deleteById(id);
+    await this.productRepository.deleteById(id);
   }
 }
