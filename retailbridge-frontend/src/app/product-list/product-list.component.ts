@@ -16,12 +16,12 @@ import { FormsModule } from '@angular/forms';
 })
 export class ProductListComponent {
   searchQuery: string = '';
-  products = [
+ /* products = [
     { id: 1, name: 'Air Max', brand: 'Nike', price: 120, image: 'images/airmax.jpg' },
     { id: 2, name: 'Ultraboost', brand: 'Adidas', price: 150, image: 'images/ultraboost.webp' },
     { id: 3, name: 'Classic', brand: 'Reebok', price: 100, image: 'images/classic.jpg' },
-  ];
-  //products: any[] = [];
+  ];*/
+products: any[] = [];
 
   constructor(private productService: ProductService, private router: Router) {}
 
@@ -34,7 +34,7 @@ export class ProductListComponent {
       product.brand.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
   }
-/*
+
   ngOnInit(): void {
     this.productService.getAllProducts().subscribe((data) => {
       this.products = data;
@@ -45,5 +45,5 @@ export class ProductListComponent {
     this.productService.deleteProduct(id).subscribe(() => {
       //this.products = this.products.filter((product) => product.id !== id);
     });
-  }*/
+  }
 }

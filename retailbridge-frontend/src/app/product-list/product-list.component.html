@@ -1,13 +1,19 @@
 <div class="search-bar">
   <input [(ngModel)]="searchQuery" type="text" placeholder="Search for products..." />
 </div>
+<div *ngIf="products.length > 0">
 <div class="product-list">
   <div *ngFor="let product of products" class="product">
     <img [src]="product.image" alt="{{ product.name }}" />
     <h3>{{ product.name }}</h3>
+    <p>{{ product.description }}</p>
     <p>Brand: {{ product.brand }}</p>
-    <p>Price: ₹{{ product.price }}</p>
-    <button [routerLink]="['/product', product.id]">View Details</button>
+    <p>Price: ₹{{ product.price.toLocaleString('en-IN') }}</p>
+    <button routerLink="/product/{{ product.id }}">View Details</button>
+    
   </div>
-
+</div>
+<div *ngIf="products.length === 0">
+  <p>No products available</p>
+</div>
 </div>

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../Services/product.service';
 import { Product } from '../models/product.model';
 import { CommonModule } from '@angular/common';
+import { ApiService } from '../Services/api.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -14,6 +15,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ProductDetailComponent implements OnInit {
   product: any;
+  //product: Product | null = null;
 
   reviews = [
     { user: 'Alice', comment: 'Great quality!' },
@@ -22,10 +24,12 @@ export class ProductDetailComponent implements OnInit {
   
 
   constructor(
+    private apiService: ApiService,
     private route: ActivatedRoute,
     private productService: ProductService
   ) {}
   ngOnInit() {
+    this.getProduct();
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       const productData = [
@@ -56,5 +60,17 @@ export class ProductDetailComponent implements OnInit {
       ];
       this.product = productData.find(product => product.id === +id);
     }
+  }
+  getProduct(): void {
+    const productId = this.route.snapshot.paramMap.get('id'); // Get product ID from route
+    if (productId) {
+      this.apiService.getProduct(productId).subscribe((product) => {
+        this.product = product;
+      });
+    }
+  }
+  isAdminOrSupport(): boolean {
+    // Logic for checking if the user is an admin or support
+    return false; // Replace with actual logic for admin/support check
   }
 }
