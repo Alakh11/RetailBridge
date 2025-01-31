@@ -4,12 +4,13 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
   del,
   get,
   getModelSchemaRef,
+  HttpErrors,
   param,
   patch,
   post,
@@ -23,7 +24,7 @@ import {ProductRepository} from '../repositories';
 export class ProductController {
   constructor(
     @repository(ProductRepository)
-    public productRepository : ProductRepository,
+    public productRepository: ProductRepository,
   ) {}
 
   @post('/products')
@@ -44,7 +45,11 @@ export class ProductController {
     })
     product: Omit<Product, 'id'>,
   ): Promise<Product> {
-    return this.productRepository.create(product);
+    try {
+      return await this.productRepository.create(product);
+    } catch (error) {
+      throw new Error('Failed to create product');
+    }
   }
 
   @get('/products/count')
@@ -58,6 +63,7 @@ export class ProductController {
     return this.productRepository.count(where);
   }
 
+   // Fetch all products
   @get('/products')
   @response(200, {
     description: 'Array of Product model instances',
@@ -65,15 +71,26 @@ export class ProductController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(Product, {includeRelations: true}),
+          items: {
+            type: 'object',
+            properties: {
+              id: {type: 'number'},
+              name: {type: 'string'},
+              price: {type: 'number'},
+            },
         },
       },
     },
+  },
   })
   async find(
     @param.filter(Product) filter?: Filter<Product>,
   ): Promise<Product[]> {
-    return this.productRepository.find(filter);
+    try {
+      return await this.productRepository.find(filter);
+    } catch (error) {
+      throw new Error('Error fetching products');
+    }
   }
 
   @patch('/products')
@@ -95,12 +112,22 @@ export class ProductController {
     return this.productRepository.updateAll(product, where);
   }
 
+  // Fetch product by ID
   @get('/products/{id}')
   @response(200, {
     description: 'Product model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(Product, {includeRelations: true}),
+        schema: {
+        type: 'object',
+        properties: {
+          id: {type: 'number'},
+          name: {type: 'string'},
+          description: {type: 'string'},
+          price: {type: 'number'},
+          category: {type: 'string'}
+        },
+      },
       },
     },
   })
@@ -108,7 +135,19 @@ export class ProductController {
     @param.path.number('id') id: number,
     @param.filter(Product, {exclude: 'where'}) filter?: FilterExcludingWhere<Product>
   ): Promise<Product> {
-    return this.productRepository.findById(id, filter);
+    try {
+      const product = await this.productRepository.findById(id);
+      if (!product) {
+        throw new Error(`Product with ID ${id} not found.`);
+      }
+      return product;
+    } catch (error) {
+      console.error('Error fetching product by ID:', error.message);
+      throw new HttpErrors.InternalServerError(
+      'An unexpected error occurred. Please try again later.'
+      //throw new Error(`Error fetching product by ID: ${error.message}`
+      );
+    }
   }
 
   @patch('/products/{id}')

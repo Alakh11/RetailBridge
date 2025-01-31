@@ -33,6 +33,11 @@ export class Product extends Entity {
   categoryId: number;
 
   @property({
+    type: 'string',
+  })
+  category?: string;
+
+  @property({
     type: 'number',
     required: true,
   })
