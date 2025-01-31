@@ -1,9 +1,13 @@
-<div *ngIf="user; else errorTemplate">
-    <h1>{{ user.name }}</h1>
-    <p>{{ sanitizeData(user.description) }}</p>
-    <p>Price: {{ user.price | currency }}</p>
-    <img [src]="user.image" alt="User Image">
-  </div>
+@if (user) {
+    <div>
+      <h1>{{ user.name }}</h1>
+      <p>{{ sanitizeData(user.description) }}</p>
+     <!-- <p>Price: {{ user.price | currency }}</p>-->
+      <img [src]="user.image" alt="User Image">
+    </div>
+  } @else {
+    <p>{{ errorMessage }}</p>
+  }
   
   <ng-template #errorTemplate>
     <p>{{ errorMessage }}</p>
