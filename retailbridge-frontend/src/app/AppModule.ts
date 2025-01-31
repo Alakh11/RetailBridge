@@ -7,26 +7,24 @@ import { BrowserModule } from '@angular/platform-browser';  // Browser module fo
 import { SanitizePipe } from './sanitize.pipe';
 import { ProductManagementComponent } from './product-management/product-management.component';
 import { AppComponent } from './app.component';
-import { CommonModule } from '@angular/common';// CommonModule for Angular directives like ngIf, ngFor
+import { CommonModule } from '@angular/common'; // CommonModule for Angular directives like ngIf, ngFor
 
 @NgModule({
-    declarations: [ 
-        
-      ],
-    
   imports: [
-    HttpClientModule,      //  HTTP client module for API requests
-    CommonModule,           //  CommonModule for basic Angular functionality
-    RouterModule,          //  RouterModule for routing support
-    AppRoutingModule,      //  routing module to handle routes
-    FontAwesomeModule,     //  FontAwesome module to support icons
-    BrowserModule,         //  BrowserModule for the browser platform
-    AppComponent,
-    SanitizePipe,
-    ProductManagementComponent
+    BrowserModule, // BrowserModule should be first
+    CommonModule, // CommonModule for basic Angular functionality
+    HttpClientModule, // HTTP client module for API requests
+    RouterModule, // RouterModule for routing support
+    AppRoutingModule, // Routing module to handle routes
+    FontAwesomeModule, // FontAwesome module to support icons
+    ProductManagementComponent, // Import the standalone component
+    SanitizePipe // Import the standalone pipe
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],  // Allow custom elements in templates
+  schemas: [CUSTOM_ELEMENTS_SCHEMA], // Allow custom elements in templates
   providers: [],
-  bootstrap: [] 
 })
 export class AppModule {}
+
+// Bootstrap the standalone AppComponent
+import { bootstrapApplication } from '@angular/platform-browser';
+bootstrapApplication(AppComponent);

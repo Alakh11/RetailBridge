@@ -28,7 +28,7 @@ export class ProductDisplayComponent implements OnInit {
 
   // Load products from API
   loadProducts(): void {
-    this.productService.getProducts().subscribe((response: ProductApiResponse) => {
+    this.productService.getAllProducts().subscribe((response: ProductApiResponse) => {
       this.products = response.products; // Ensure proper assignment
     });
     

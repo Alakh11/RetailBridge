@@ -1,7 +1,7 @@
 // models/product.model.ts
 export interface Product {
     id: string;
-    productId?: string; 
+    productId: string; 
     name: string;
     price: number;
     description: string;
@@ -12,5 +12,9 @@ export interface Product {
   }
   export interface ProductApiResponse {
     products: Product[];
+    items: Product[];
+    total: number;
+    totalCount: number;
+
   }
   

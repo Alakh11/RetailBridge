@@ -3,20 +3,7 @@ import { ApiService } from '../Services/api.service';
 import { UtilService } from '../Services/util.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { faPencilAlt, faTimes, faCoffee, faPencil } from '@fortawesome/free-solid-svg-icons';
-
-
-interface Product {
-  productId: string;
-  price: number;
-  name: string;
-  description: SafeHtml; // Updated type to SafeHtml
-  details: SafeHtml; // Updated type to SafeHtml
-}
-
-interface ProductApiResponse {
-  items: Product[];
-  totalCount: number;
-}
+import { Product, ProductApiResponse } from '../models/product.model';
 
 @Component({
   selector: 'app-product-management',
@@ -53,12 +40,13 @@ export class ProductManagementComponent implements OnInit {
   }
 
   async loadProducts(): Promise<void> {
+    
   this.isLoading = true; // Start loading
   const skip = (this.currentPage - 1) * this.itemsPerPage;
 
   try {
     // Ensure response is typed
-    const response : ProductApiResponse = await this.apiService
+    const response : ProductApiResponse | undefined = await this.apiService
       .getProducts({ skip, limit: this.itemsPerPage })
       .toPromise();
 
@@ -76,13 +64,16 @@ export class ProductManagementComponent implements OnInit {
   } catch (error: any) {
     console.error('Error fetching products:', error);
     this.errorMessage = error?.message || 'Failed to load products';
-  } finally {
+  } 
+  finally {
     this.isLoading = false; // Stop loading
   }
 }
 
 
   deleteProduct(productId: string): void {
+    this.errorMessage = '';
+    this.successMessage = '';
     this.apiService.deleteProduct(productId).subscribe(
       () => {
         this.successMessage = 'Product deleted successfully!';
@@ -100,7 +91,7 @@ export class ProductManagementComponent implements OnInit {
   }
 
   goToPage(page: number): void {
-    if (page >= 1 && page <= this.totalPages) {
+    if (page >= 1 && page <= this.totalPages && page !== this.currentPage) {
       this.currentPage = page;
       this.loadProducts();
     }
