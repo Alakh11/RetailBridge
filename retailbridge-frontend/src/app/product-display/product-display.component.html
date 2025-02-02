@@ -1,7 +1,6 @@
 <!-- product-display.component.html -->
 <div class="container-fluid">
     <nav id="navBar" class="navbar navbar-expand-lg navbar-light bg-light">
-      <!-- You can customize the navbar here -->
     </nav>
     <div id="content" class="container-fluid">
       <div class="card-deck">
@@ -12,9 +11,13 @@
             <p class="card-text">{{ product.description }}</p>
             <p class="card-text">Price: ${{ product.price }}</p>
             <button class="btn btn-primary">Add to Cart</button>
+            <button routerLink="/">Back to Product List</button>
           </div>
         </div>
       </div>
     </div>
+    <div *ngIf="products.length === 0"> 
+        <p>Loading product details...</p>
+      </div>
   </div>
   

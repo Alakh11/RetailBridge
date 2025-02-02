@@ -5,12 +5,13 @@ import { provideRouter, RouterModule } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { routes } from './app/routes';
 import { ProductListComponent } from './app/product-list/product-list.component';
+import { appConfig } from './app/app.config';
 
 if (process.env['NODE_ENV'] === 'production') {
   enableProdMode();
 }
 
-bootstrapApplication(AppComponent, {
+bootstrapApplication( AppComponent, {
   providers: [
     importProvidersFrom(
       RouterModule.forRoot([

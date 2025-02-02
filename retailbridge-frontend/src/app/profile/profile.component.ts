@@ -4,15 +4,17 @@ import { ApiService } from '../Services/api.service'; // Adjust the import based
 import { DomSanitizer } from '@angular/platform-browser';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.css'],
+  imports: [CommonModule],
 })
 export class ProfileComponent implements OnInit {
   user: any;
-  errorMessage = '';
+  errorMessage: string = '';
 
   constructor(
     private apiService: ApiService, // Assuming you have a service for API calls
