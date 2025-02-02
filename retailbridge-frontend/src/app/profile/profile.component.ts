@@ -12,7 +12,7 @@ import { of } from 'rxjs';
 })
 export class ProfileComponent implements OnInit {
   user: any;
-  errorMessage: string = '';
+  errorMessage = '';
 
   constructor(
     private apiService: ApiService, // Assuming you have a service for API calls

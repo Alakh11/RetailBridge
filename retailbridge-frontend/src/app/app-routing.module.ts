@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductManagementComponent } from './product-management/product-management.component';

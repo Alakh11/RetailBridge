@@ -1,24 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../Services/api.service';
-import { UtilService } from '../Services/util.service';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { UtilService } from '../Services/util/util.service';
+import { DomSanitizer } from '@angular/platform-browser';
 import { faPencilAlt, faTimes, faCoffee, faPencil } from '@fortawesome/free-solid-svg-icons';
 import { Product, ProductApiResponse } from '../models/product.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-product-management',
   templateUrl: './product-management.component.html',
-  styleUrls: ['./product-management.component.scss']
+  styleUrls: ['./product-management.component.scss'],
+  imports: [CommonModule]
 })
 export class ProductManagementComponent implements OnInit {
   products: Product[] = [];
-  isAdmin: boolean = false;
-  currentPage: number = 1;
-  itemsPerPage: number = 4;
-  errorMessage: string = '';
-  successMessage: string = '';
-  totalProductCount: number = 0;
-  isLoading: boolean = false;
+  isAdmin = false;
+  currentPage = 1;
+  itemsPerPage = 4;
+  errorMessage = '';
+  successMessage = '';
+  totalProductCount = 0;
+  isLoading = false;
   faCoffee = faCoffee;
   faPencilAlt = faPencilAlt;
   faTimes = faTimes;
@@ -40,8 +42,9 @@ export class ProductManagementComponent implements OnInit {
   }
 
   async loadProducts(): Promise<void> {
-    
-  this.isLoading = true; // Start loading
+    this.errorMessage = '';
+    this.successMessage = '';
+    this.isLoading = true; // Start loading
   const skip = (this.currentPage - 1) * this.itemsPerPage;
 
   try {

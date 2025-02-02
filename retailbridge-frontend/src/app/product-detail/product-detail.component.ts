@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../Services/product.service';
-import { Product } from '../models/product.model';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../Services/api.service';
 
@@ -14,6 +13,7 @@ import { ApiService } from '../Services/api.service';
   imports: [CommonModule]
 })
 export class ProductDetailComponent implements OnInit {
+  products: any[] = [];
   product: any;
   //product: Product | null = null;
 
